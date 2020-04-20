@@ -1,29 +1,33 @@
 // Track the currently selected demo
-var currentDemo = 'message';
+let currentDemo = 'initiateAuth';
 
 // Change the currently selected demo
 function changeTab(newTab) {
-    if (newTab === 'message') {
-        currentDemo = 'message';
-        $('#messaging').addClass('current');
-        $('#call').removeClass('current');
-        $('form button').html('Send me a message');
+    if (newTab === 'initiateAuth') {
+        currentDemo = 'initiateAuth';
+        $('#initiateAuth').addClass('current');
+        $('#refreshToken').removeClass('current');
+        $('.refreshToken').hide();
+        $('.username').show();
+        $('form button').html('Execute auth login');
     } else {
-        currentDemo = 'call';
-        $('#call').addClass('current');
-        $('#messaging').removeClass('current');
-        $('form button').html('Call my phone');
+        currentDemo = 'refreshToken';
+        $('#refreshToken').addClass('current');
+        $('#initiateAuth').removeClass('current');
+        $('.username').hide();
+        $('.refreshToken').show();
+        $('form button').html('Execute refresh token');
     }
 }
 
 // Set up handlers for tabs
-$('#messaging').on('click', function(e) { 
+$('#initiateAuth').on('click', function(e) {
     e.preventDefault();
-    changeTab('message');
+    changeTab('initiateAuth');
 });
-$('#call').on('click', function(e) { 
+$('#refreshToken').on('click', function(e) {
     e.preventDefault();
-    changeTab('call');
+    changeTab('refreshToken');
 });
 
 // Set up handler for "flash" message

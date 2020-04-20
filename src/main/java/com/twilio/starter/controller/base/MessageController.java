@@ -1,14 +1,14 @@
-package com.twilio.starter.controller;
+package com.twilio.starter.controller.base;
 
 import com.twilio.rest.api.v2010.account.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import static com.twilio.starter.Application.TWILIO_PHONE_NUMBER;
+
 
 public class MessageController {
-
-    private static final String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
 
     public static Route handlePost = (Request request, Response response) -> {
         // Get POST data
@@ -19,6 +19,8 @@ public class MessageController {
                 new com.twilio.type.PhoneNumber(TWILIO_PHONE_NUMBER),
                 "Good luck on your Twilio quest!")
                 .create();
+
+        System.out.println(call);
 
         return "Message incoming!";
     };
