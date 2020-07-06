@@ -37,10 +37,12 @@ public class Application {
         post("/sms", SmsReplyController.handlePost);
         get("/status", StatusController.handlePost);
 
-        // AWS
+        // Muze
+        post("/signUp", SingUpController.handlePost);
         post("/initiateAuth", InitiateAuthController.handlePost);
         post("/authLogin", AuthLoginController.handlePost);
         post("/refreshToken", RefreshTokenController.handlePost);
+        post("/createPost", CreatePostController.handlePost);
 
 
         get("/login", (req, res) -> {

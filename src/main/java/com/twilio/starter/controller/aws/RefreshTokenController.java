@@ -2,13 +2,12 @@ package com.twilio.starter.controller.aws;
 
 import com.amazonaws.services.cognitoidp.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twilio.starter.domain.AuthResult;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.twilio.starter.Application.AWS_COGNITO_IDENTITY_PROVIDER;
@@ -46,7 +45,7 @@ public class RefreshTokenController {
                         .withAuthParameters(authParams)
         );
 
-        InitiateAuthController.AuthResult authResult = new InitiateAuthController.AuthResult();
+        AuthResult authResult = new AuthResult();
         authResult.accessToken = result.getAuthenticationResult().getAccessToken();
         authResult.refreshToken = postRefreshToken;
         return objectMapper.writeValueAsString(authResult);

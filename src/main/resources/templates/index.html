@@ -24,19 +24,13 @@
         <p><span id="flash-message"></span> <a href="#">Close</a></p>
     </div>
 
-    <div id="welcome">
-        <img src="/img/java_shield256.png" alt="Java Shield"/>
-        <h1><span>Java</span> Guild</h1>
-        <p>
-            <a href="http://quest.twilio.com">Gather your party and
-                venture forth</a>
-        </p>
-    </div>
     <h3>Spark/Twilio/Cognito</h3>
     <br/>
     <ul id="tabs">
-        <li id="initiateAuth" class="current">Auth Login</li>
+        <li id="signUp" class="current">Sign Up</li>
+        <li id="initiateAuth">Auth Login</li>
         <li id="refreshToken">Token Refresh</li>
+        <li id="createPost">Create Post</li>
     </ul>
     <form>
         <p>User Pool Id:</p>
@@ -44,12 +38,13 @@
         <p>User Pool Client Id:</p>
         <input id="clientId" type="text" required/>
         <p>Phone number:</p>
-        <!--/*@thymesVar id="phone" type="String"*/-->
-        <input id="to" type="text" placeholder="ex: +123456789" th:value="${phone}" required/>
+        <input id="phone" type="text" placeholder="ex: +123456789" th:value="${phone}" required/>
         <p class="username">Username:</p>
         <input class="username" id="username" type="text" placeholder="ex: Hiro" value="Hiro" required/>
         <p class="refreshToken">RefreshToken:</p>
         <input class="refreshToken" id="postRefreshToken" type="text" value=""/>
+        <p>Original Post Id:</p>
+        <input class="createPost" id="originalPostId" type="text"/>
         <button>Execute auth login</button>
     </form>
     <div id="authResult">
@@ -57,14 +52,12 @@
         <input th:type="text" id="accessToken">
         <p>RefreshToken:</p>
         <input th:type="text" id="refreshedToken">
+        <p>CreatePost:</p>
+        <input th:type="text" id="postId">
     </div>
 </div>
 <div id="footer">
-    <span>Twilio</span><img src="/img/TwilioQuest32.png" alt="TwilioQuest"/>Quest
-    <p>
-        Made with <img src="/img/heart.gif" alt="heart"> by your pals
-        <a href="http://www.twilio.com">@@twilio</a>.
-    </p>
+    <input th:type="text" placeholder="For memo" id="lastPhoneNumber">
 </div>
 
 <!-- Some dirty JavaScript to help drive our UI -->

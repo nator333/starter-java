@@ -1,4 +1,5 @@
 let refreshToken = ""
+
 // Show an information box at the top of the page
 function showFlash(message) {
     $('#flash span').html(message);
@@ -6,7 +7,7 @@ function showFlash(message) {
 }
 
 // Intercept our form button click
-$('form button').on('click', function(e) {
+$('form button').on('click', function (e) {
     e.preventDefault();
 
     $('#authResult').hide();
@@ -18,25 +19,31 @@ $('form button').on('click', function(e) {
     // We expect just a string of text back from the server (keeping it simple)
     const url = "/" + currentDemo;
     $.ajax(url, {
-        method:'POST',
-        dataType:'text',
-        data:{
-            userPoolId:$('#userPoolId').val(),
-            clientId:$('#clientId').val(),
-            username:$('#username').val(),
-            postRefreshToken:$('#postRefreshToken').val()
+        method: 'POST',
+        dataType: 'text',
+        data: {
+            userPoolId: $('#userPoolId').val(),
+            clientId: $('#clientId').val(),
+            username: $('#username').val(),
+            phone: $('#phone').val(),
+            postRefreshToken: $('#postRefreshToken').val(),
+            originalPostId: $('#originalPostId').val()
         },
-        success: function(data) {
+        success: function (data) {
             console.log(data);
             const authResult = JSON.parse(data);
-            $('#authResult').show();
-            $('#accessToken').val(authResult.accessToken);
-            $('#refreshedToken').val(authResult.refreshToken);
-            $('#postRefreshToken').val(authResult.refreshToken);
-            refreshToken = authResult.refreshToken;
-            showFlash("Success");
+            if (authResult.isSignUp !== undefined) {
+                showFlash(authResult.userSub + "Is Signed Up");
+            } else {
+                $('#authResult').show();
+                $('#accessToken').val(authResult.accessToken);
+                $('#refreshedToken').val(authResult.refreshToken);
+                $('#postRefreshToken').val(authResult.refreshToken);
+                refreshToken = authResult.refreshToken;
+                showFlash("Success");
+            }
         },
-        error: function(jqxhr) {
+        error: function (jqxhr) {
             alert('There was an error sending a request to the server :(');
         }
     })

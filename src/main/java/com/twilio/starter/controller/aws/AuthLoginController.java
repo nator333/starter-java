@@ -38,7 +38,7 @@ public class AuthLoginController {
         System.out.println(answer);
 
         responses.put("ANSWER", answer);
-        responses.put("USERNAME", TWILIO_PHONE_NUMBER);
+        responses.put("USERNAME", InitiateAuthController.phone);
 
         AdminRespondToAuthChallengeResult result =
                 AWS_COGNITO_IDENTITY_PROVIDER.adminRespondToAuthChallenge(
