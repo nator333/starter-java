@@ -27,7 +27,8 @@ $('form button').on('click', function (e) {
             username: $('#username').val(),
             phone: $('#phone').val(),
             postRefreshToken: $('#postRefreshToken').val(),
-            originalPostId: $('#originalPostId').val()
+            originalPostId: $('#originalPostId').val(),
+            accessToken: $('#accessTokenSent').val()
         },
         success: function (data) {
             console.log(data);
@@ -37,6 +38,7 @@ $('form button').on('click', function (e) {
             } else {
                 $('#authResult').show();
                 $('#accessToken').val(authResult.accessToken);
+                $('#accessTokenSent').val(authResult.accessToken);
                 $('#refreshedToken').val(authResult.refreshToken);
                 $('#postRefreshToken').val(authResult.refreshToken);
                 refreshToken = authResult.refreshToken;
