@@ -28,13 +28,15 @@ $('form button').on('click', function (e) {
             phone: $('#phone').val(),
             postRefreshToken: $('#postRefreshToken').val(),
             originalPostId: $('#originalPostId').val(),
-            accessToken: $('#accessTokenSent').val()
+            accessToken: $('#accessTokenSent').val(),
+            amount: $('#amount').val(),
+            ticketId: $('#ticketId').val()
         },
         success: function (data) {
             console.log(data);
             const authResult = JSON.parse(data);
             if (authResult.isSignUp !== undefined) {
-                showFlash(authResult.userSub + "Is Signed Up");
+                showFlash(authResult.userSub + " Is Signed Up");
             } else {
                 $('#authResult').show();
                 $('#accessToken').val(authResult.accessToken);

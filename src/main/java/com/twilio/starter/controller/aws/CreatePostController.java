@@ -29,26 +29,26 @@ public class CreatePostController {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
     private static final HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory();
-    private static final String POST_API_URL = "https://ticket-1234.dev.muzetv.app/posts-api/graph";
+    private static final String POST_API_URL = "https://%s.dev.muzetv.app/posts-api/graph";
 
     public static Route handlePost = (Request request, Response response) -> {
         FileAccessUtil util = new FileAccessUtil();
         File tempFile = File.createTempFile("temp", ".mp4");
         try (FileOutputStream fos = new FileOutputStream(tempFile)) {
             // Writes bytes from the specified byte array to this file output stream
-            fos.write(util.getReadAllBytes("basketball.mp4"));
+            fos.write(util.getReadAllBytes("food.mp4"));
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
         }
 
-        for (int i = 0; i < 100; i++) {
-            // Get POST data
-            accessToken = request.queryParams("accessToken");
-            String originalPostId = request.queryParams("originalPostId");
+        accessToken = request.queryParams("accessToken");
+        Integer amount = Integer.parseInt(request.queryParams("amount"));
+        String originalPostId = request.queryParams("originalPostId");
+        String ticketId = request.queryParams("ticketId");
 
-            System.out.println(request.attributes());
-            System.out.println(request.body());
+        for (int i = 0; i < amount; i++) {
+            // Get POST data
 
             // 1. create upload
             Map<String, Object> data = new LinkedHashMap<>();
@@ -65,7 +65,7 @@ public class CreatePostController {
 
             HttpContent createUploadContent = new JsonHttpContent(JSON_FACTORY, data);
             HttpRequest createPostRequest = requestFactory.buildPostRequest(
-                    new GenericUrl(POST_API_URL),
+                    new GenericUrl(String.format(POST_API_URL, ticketId)),
                     createUploadContent
             );
             HttpHeaders headers = createPostRequest.getHeaders();
@@ -81,22 +81,15 @@ public class CreatePostController {
             String postURL = decoded.getData().getCreateUpload().getTicket().getUploadURL();
 
             // 2. upload video
-            Map<String, Object> parameters = Maps.newHashMap();
-            //parameters.put("contentType", printRequest.getContentType());
-
-            MultipartContent multiContent = new MultipartContent();
-            multiContent.addPart(new MultipartContent.Part(new UrlEncodedContent(parameters)));
-            multiContent.addPart(
-                    new MultipartContent.Part(
-                            new FileContent(
-                                    "video/mp4", tempFile
-                            )
-                    )
-            );
+            FileContent fileContent = new FileContent("video/mp4", tempFile);
+            HttpRequest putRequest = requestFactory.buildPutRequest(
+                    new GenericUrl(postURL), fileContent);
+            HttpHeaders putHeaders = putRequest.getHeaders();
+            putHeaders.set("Content-Type", "video/mp4");
+            putHeaders.set("Content-Length", tempFile.length());
 
             try {
-                HttpResponse uploadResponse = requestFactory.buildPutRequest(
-                        new GenericUrl(postURL), multiContent).execute();
+                HttpResponse uploadResponse = putRequest.execute();
                 System.out.println(IOUtils.toString(uploadResponse.getContent()));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -115,7 +108,7 @@ public class CreatePostController {
 
             HttpContent completeUploadContent = new JsonHttpContent(JSON_FACTORY, data);
             HttpRequest completePostRequest = requestFactory.buildPostRequest(
-                    new GenericUrl(POST_API_URL),
+                    new GenericUrl(String.format(POST_API_URL, ticketId)),
                     completeUploadContent
             );
             HttpHeaders completeHeaders = completePostRequest.getHeaders();

@@ -43,8 +43,12 @@
         <input class="username" id="username" type="text" placeholder="ex: Hiro" value="Hiro" required/>
         <p class="refreshToken">RefreshToken:</p>
         <input class="refreshToken" id="postRefreshToken" type="text" value=""/>
+        <p>Ticket Id:</p>
+        <input class="createPost" id="ticketId" type="text" value="ticket-"/>
         <p>Original Post Id:</p>
         <input class="createPost" id="originalPostId" type="text"/>
+        <p>Amount:</p>
+        <input class="createPost" id="amount" type="number"/>
         <button>Execute auth login</button>
         <input th:type="text" id="accessTokenSent" hidden>
     </form>
