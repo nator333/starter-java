@@ -1,8 +1,6 @@
 package com.twilio.starter.controller.aws;
 
-import com.amazonaws.services.cognitoidp.model.AttributeType;
-import com.amazonaws.services.cognitoidp.model.SignUpRequest;
-import com.amazonaws.services.cognitoidp.model.SignUpResult;
+import com.amazonaws.services.cognitoidp.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.starter.domain.SignUpAuthResult;
 import spark.Request;

@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.twilio.starter.Application.AWS_COGNITO_IDENTITY_PROVIDER;
-import static com.twilio.starter.Application.TWILIO_PHONE_NUMBER;
 
 
 public class AuthLoginController {
@@ -21,7 +20,7 @@ public class AuthLoginController {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static Route handlePost = (Request request, Response response) -> {
-        // Signup
+        // Signup on Cognito
         Map<String, String> responses = new HashMap<>();
         System.out.println("body============");
         System.out.println(request.body());
@@ -51,11 +50,6 @@ public class AuthLoginController {
                 );
 
         InitiateAuthController.resultType = result.getAuthenticationResult();
-        /*Map<String, String> map = new HashMap<>();
-        map.put("accessToken", InitiateAuthController.resultType.getAccessToken());
-        map.put("refreshToken", InitiateAuthController.resultType.getRefreshToken());
-        map.put("phone", TWILIO_PHONE_NUMBER);
-        map.put("password", "password_examp1E");*/
         return null;
     };
 

@@ -1,4 +1,4 @@
-package com.twilio.starter.domain;
+package com.twilio.starter.domain.createUpload;
 
 public class CreateUploadResponse {
     private Ticket ticket;

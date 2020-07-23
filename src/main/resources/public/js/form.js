@@ -26,6 +26,7 @@ $('form button').on('click', function (e) {
             clientId: $('#clientId').val(),
             username: $('#username').val(),
             phone: $('#phone').val(),
+            userSub: $('#userSub').val(),
             postRefreshToken: $('#postRefreshToken').val(),
             originalPostId: $('#originalPostId').val(),
             accessToken: $('#accessTokenSent').val(),
@@ -36,6 +37,7 @@ $('form button').on('click', function (e) {
             console.log(data);
             const authResult = JSON.parse(data);
             if (authResult.isSignUp !== undefined) {
+                $('#userSub').val(authResult.userSub);
                 showFlash(authResult.userSub + " Is Signed Up");
             } else {
                 $('#authResult').show();
